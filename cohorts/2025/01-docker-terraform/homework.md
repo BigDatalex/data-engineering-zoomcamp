@@ -20,7 +20,9 @@ Run docker with the `python:3.12.8` image in an interactive mode, use the entryp
 
 What's the version of `pip` in the image?
 
-- 24.3.1
+sudo docker run -it --entrypoint=/bin/bash python:3.12.8
+
+- 24.3.1 x
 - 24.2.1
 - 23.3.1
 - 23.2.1
@@ -64,7 +66,7 @@ volumes:
 
 - postgres:5433
 - localhost:5432
-- db:5433
+- db:5433 x
 - postgres:5432
 - db:5432
 
@@ -74,7 +76,7 @@ If there are more than one answers, select only one of them
 
 Run Postgres and load data as shown in the videos
 We'll use the green taxi trips from October 2019:
-
+www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 ```bash
 wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz
 ```
@@ -99,10 +101,29 @@ During the period of October 1st 2019 (inclusive) and November 1st 2019 (exclusi
 4. In between 7 (exclusive) and 10 miles (inclusive),
 5. Over 10 miles 
 
+```sql
+SELECT * FROM public.green_taxi_data
+where lpep_pickup_datetime >= '2019-10-01'
+and lpep_dropoff_datetime < '2019-11-01'
+and trip_distance <= 1
+```
+104,802
+
+```sql
+SELECT count(*) FROM public.green_taxi_data
+where lpep_pickup_datetime >= '2019-10-01'
+and lpep_dropoff_datetime < '2019-11-01'
+and trip_distance > 1
+and trip_distance <=3
+```
+
+198,924;
+
+
 Answers:
 
 - 104,802;  197,670;  110,612;  27,831;  35,281
-- 104,802;  198,924;  109,603;  27,678;  35,189
+- 104,802;  198,924;  109,603;  27,678;  35,189 x
 - 104,793;  201,407;  110,612;  27,831;  35,281
 - 104,793;  202,661;  109,603;  27,678;  35,189
 - 104,838;  199,013;  109,645;  27,688;  35,202
@@ -114,11 +135,14 @@ Which was the pick up day with the longest trip distance?
 Use the pick up time for your calculations.
 
 Tip: For every day, we only care about one single trip with the longest distance. 
-
+```
+SELECT * FROM public.green_taxi_data
+where trip_distance = (Select max(trip_distance) From public.green_taxi_data)
+```
 - 2019-10-11
 - 2019-10-24
 - 2019-10-26
-- 2019-10-31
+- 2019-10-31 x
 
 
 ## Question 5. Three biggest pickup zones
@@ -127,8 +151,15 @@ Which were the top pickup locations with over 13,000 in
 `total_amount` (across all trips) for 2019-10-18?
 
 Consider only `lpep_pickup_datetime` when filtering by date.
- 
-- East Harlem North, East Harlem South, Morningside Heights
+ ```
+Select "Borough", "Zone", sum(total_amount) as sum_total_amount from public.green_taxi_data t
+join public.zones z on t."PULocationID" = z."LocationID"
+where lpep_pickup_datetime >= '2019-10-18' 
+and lpep_pickup_datetime < '2019-10-19' 
+Group by 1,2
+order by sum_total_amount desc
+```
+- East Harlem North, East Harlem South, Morningside Heights x
 - East Harlem North, Morningside Heights
 - Morningside Heights, Astoria Park, East Harlem South
 - Bedford, East Harlem North, Astoria Park
@@ -144,8 +175,19 @@ Note: it's `tip` , not `trip`
 
 We need the name of the zone, not the ID.
 
+```
+Select zpu."Zone", zdo."Zone", max(t.tip_amount)  from public.green_taxi_data t
+join public.zones zpu on t."PULocationID" = zpu."LocationID"
+join public.zones zdo on t."DOLocationID" = zdo."LocationID"
+where lpep_pickup_datetime >= '2019-10-01' 
+and lpep_pickup_datetime < '2019-11-01' 
+and zpu."Zone" = 'East Harlem North'
+group by 1,2
+order by max desc
+```
+
 - Yorkville West
-- JFK Airport
+- JFK Airport x
 - East Harlem North
 - East Harlem South
 
@@ -167,6 +209,8 @@ Which of the following sequences, **respectively**, describes the workflow for:
 1. Downloading the provider plugins and setting up backend,
 2. Generating proposed changes and auto-executing the plan
 3. Remove all resources managed by terraform`
+
+init, plan, apply, destroy
 
 Answers:
 - terraform import, terraform apply -y, terraform destroy
