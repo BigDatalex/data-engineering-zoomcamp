@@ -33,8 +33,11 @@ Complete the Quiz shown below. It’s a set of 6 multiple-choice questions to te
 - 692.6 MB
 
 2) What is the value of the variable `file` when the inputs `taxi` is set to `green`, `year` is set to `2020`, and `month` is set to `04` during execution?
+
+  file: "{{inputs.taxi}}_tripdata_{{trigger.date | date('yyyy-MM')}}.csv"
+
 - `{{inputs.taxi}}_tripdata_{{inputs.year}}-{{inputs.month}}.csv` 
-- `green_tripdata_2020-04.csv`
+- `green_tripdata_2020-04.csv` x
 - `green_tripdata_04_2020.csv`
 - `green_tripdata_2020.csv`
 
@@ -45,9 +48,17 @@ Complete the Quiz shown below. It’s a set of 6 multiple-choice questions to te
 - 29,430,127
 
 4) How many rows are there for the `Green` Taxi data for the year 2020?
+
+1734027
+```
+SELECT count(*) FROM public.green_tripdata
+where lpep_pickup_datetime >= '2020-01-01'
+and lpep_dropoff_datetime < '2021-01-01'
+```
+
 - 5,327,301
 - 936,199
-- 1,734,051
+- 1,734,051 x
 - 1,342,034
 
 5) How many rows are there for the `Yellow` Taxi data for March 2021?
