@@ -28,7 +28,7 @@ Complete the Quiz shown below. It’s a set of 6 multiple-choice questions to te
 
 1) Within the execution for `Yellow` Taxi data for the year `2020` and month `12`: what is the uncompressed file size (i.e. the output file `yellow_tripdata_2020-12.csv` of the `extract` task)?
 - 128.3 MB
-- 134.5 MB
+- 134.5 MB x
 - 364.7 MB
 - 692.6 MB
 
@@ -42,8 +42,15 @@ Complete the Quiz shown below. It’s a set of 6 multiple-choice questions to te
 - `green_tripdata_2020.csv`
 
 3) How many rows are there for the `Yellow` Taxi data for the year 2020?
+```
+SELECT count(*) FROM public.yellow_tripdata
+where tpep_pickup_datetime >= '2020-01-01'
+and tpep_dropoff_datetime < '2021-01-01'
+```
+24648476
+
 - 13,537.299
-- 24,648,499
+- 24,648,499 x
 - 18,324,219
 - 29,430,127
 
@@ -62,14 +69,21 @@ and lpep_dropoff_datetime < '2021-01-01'
 - 1,342,034
 
 5) How many rows are there for the `Yellow` Taxi data for March 2021?
+```
+SELECT count(*) FROM public.yellow_tripdata
+where tpep_pickup_datetime >= '2021-03-01'
+and tpep_dropoff_datetime < '2021-04-01'
+```
+1924852
 - 1,428,092
 - 706,911
-- 1,925,152
+- 1,925,152 x
 - 2,561,031
 
 6) How would you configure the timezone to New York in a Schedule trigger?
+   https://kestra.io/docs/workflow-components/triggers/schedule-trigger
 - Add a `timezone` property set to `EST` in the `Schedule` trigger configuration  
-- Add a `timezone` property set to `America/New_York` in the `Schedule` trigger configuration
+- Add a `timezone` property set to `America/New_York` in the `Schedule` trigger configuration x
 - Add a `timezone` property set to `UTC-5` in the `Schedule` trigger configuration
 - Add a `location` property set to `New_York` in the `Schedule` trigger configuration  
 
