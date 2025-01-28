@@ -48,7 +48,11 @@ where tpep_pickup_datetime >= '2020-01-01'
 and tpep_dropoff_datetime < '2021-01-01'
 ```
 24648476
-
+```
+SELECT count(*) FROM public.yellow_tripdata
+where filename like 'yellow_tripdata_2020-%'
+```
+24648499
 - 13,537.299
 - 24,648,499 x
 - 18,324,219
@@ -56,13 +60,18 @@ and tpep_dropoff_datetime < '2021-01-01'
 
 4) How many rows are there for the `Green` Taxi data for the year 2020?
 
-1734027
+
 ```
 SELECT count(*) FROM public.green_tripdata
 where lpep_pickup_datetime >= '2020-01-01'
 and lpep_dropoff_datetime < '2021-01-01'
 ```
-
+1734027
+```
+SELECT count(*) FROM public.green_tripdata
+where filename like 'green_tripdata_2020-%'
+```
+1734051
 - 5,327,301
 - 936,199
 - 1,734,051 x
@@ -75,6 +84,11 @@ where tpep_pickup_datetime >= '2021-03-01'
 and tpep_dropoff_datetime < '2021-04-01'
 ```
 1924852
+```
+SELECT count(*) FROM public.yellow_tripdata
+where filename ='yellow_tripdata_2021-03.csv'
+```
+1925152
 - 1,428,092
 - 706,911
 - 1,925,152 x
