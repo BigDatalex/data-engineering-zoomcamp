@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: staging
+    database: splendid-parsec-449218-j6
+    schema: nytaxi
+    tables:
+      #- name: green_tripdata
+      - name: yellow_tripdata
