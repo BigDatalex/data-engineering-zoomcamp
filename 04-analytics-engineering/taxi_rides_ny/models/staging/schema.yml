@@ -208,8 +208,7 @@ models:
                 - not_null:
                     severity: warn
           - name: dispatching_base_num 
-            description: > 
-                dispatching_base_num
+            description: dispatching_base_num
           - name: pickup_datetime 
             description: The date and time when the meter was engaged.
           - name: dropoff_datetime 
