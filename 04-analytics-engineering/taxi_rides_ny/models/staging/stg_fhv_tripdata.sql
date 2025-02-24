@@ -8,7 +8,7 @@ with tripdata as (
 select
     -- field description: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_fhv.pdf
     -- identifiers
-    -- {{ dbt_utils.generate_surrogate_key(["pickup_datetime"]) }} as tripid,
+    {{ dbt_utils.generate_surrogate_key(["dispatching_base_num","pickup_datetime"]) }} as tripid,
     {{ dbt.safe_cast("PUlocationID", api.Column.translate_type("integer")) }}
     as pickup_locationid,
     {{ dbt.safe_cast("DOlocationID", api.Column.translate_type("integer")) }}
@@ -22,6 +22,7 @@ select
     cast(SR_Flag as numeric) as sr_flag,
     Affiliated_base_number as affiliated_base_number
 from tripdata
+where EXTRACT(YEAR FROM pickup_datetime) = 2019
 
 -- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
 {% if var('is_test_run', default=true) %}
