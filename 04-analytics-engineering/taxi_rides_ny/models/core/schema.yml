@@ -72,6 +72,22 @@ models:
         data_type: timestamp
         description: ""
 
+      - name: pickup_year
+        data_type: int64
+        description: ""
+
+      - name: pickup_month
+        data_type: int64
+        description: ""
+
+      - name: pickup_quarter
+        data_type: int64
+        description: ""
+
+      - name: pickup_year_quarter,
+        data_type: string
+        description: ""
+
       - name: store_and_fwd_flag
         data_type: string
         description: ""
