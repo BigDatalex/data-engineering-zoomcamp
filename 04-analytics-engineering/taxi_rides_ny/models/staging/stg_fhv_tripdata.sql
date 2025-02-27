@@ -13,6 +13,7 @@ select
     as pickup_locationid,
     {{ dbt.safe_cast("DOlocationID", api.Column.translate_type("integer")) }}
     as dropoff_locationid,
+    dispatching_base_num,
 
     -- timestamps
     cast(pickup_datetime as timestamp) as pickup_datetime,
